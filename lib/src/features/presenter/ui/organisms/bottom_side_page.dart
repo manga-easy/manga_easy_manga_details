@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:manga_easy_manga_details/src/features/presenter/store/details_rating_store.dart';
-import 'package:manga_easy_manga_details/src/features/presenter/ui/molecules/TextButtonBottomBorder.dart';
+import 'package:manga_easy_manga_details/src/features/presenter/ui/molecules/text_button_bottom_border.dart';
 import 'package:manga_easy_themes/manga_easy_themes.dart';
 import 'rating_page.dart';
 import 'details_page.dart';
