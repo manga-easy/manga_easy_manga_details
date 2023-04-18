@@ -1,21 +1,17 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:coffee_cup/coffe_cup.dart';
 import 'package:flutter/material.dart';
 import 'package:manga_easy_themes/manga_easy_themes.dart';
 
+import 'package:manga_easy_manga_details/src/features/presenter/controllers/manga_details_controller.dart';
+
 class Chapters extends StatefulWidget {
-  final int qtdChapters;
-  final String chapTranslator;
-  final String chapAddedDate;
-  final List<int> userChaptersReaded;
-  final void Function(int) readUnreadChapter;
+  final MangaDetailsController controller;
+
   const Chapters({
-    super.key,
-    required this.qtdChapters,
-    required this.chapTranslator,
-    required this.chapAddedDate,
-    required this.userChaptersReaded,
-    required this.readUnreadChapter,
-  });
+    Key? key,
+    required this.controller,
+  }) : super(key: key);
 
   @override
   State<Chapters> createState() => _ChaptersState();
@@ -24,13 +20,14 @@ class Chapters extends StatefulWidget {
 class _ChaptersState extends State<Chapters> {
   @override
   Widget build(BuildContext context) {
+    var manga = widget.controller.manga;
     return Expanded(
       child: ListView.builder(
-        itemCount: widget.qtdChapters,
+        itemCount: manga.chapters.length,
         itemBuilder: (context, index) {
           return GestureDetector(
             onTap: () {
-              widget.readUnreadChapter(index);
+              widget.controller.readUnreadChapter(index);
               setState(() {});
             },
             child: Container(
@@ -39,7 +36,7 @@ class _ChaptersState extends State<Chapters> {
               margin: const EdgeInsets.only(bottom: 10),
               padding: const EdgeInsets.symmetric(horizontal: 20),
               decoration: BoxDecoration(
-                color: widget.userChaptersReaded.contains(index)
+                color: widget.controller.userChaptersReaded.contains(index)
                     ? ThemeService.of.primaryColor
                     : ThemeService.of.selectColor,
                 borderRadius: ThemeService.of.borderRadius,
@@ -53,15 +50,17 @@ class _ChaptersState extends State<Chapters> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       CoffeeText(
-                        text: 'Capitulo ${widget.qtdChapters - index}',
+                        text: 'Capitulo ${manga.chapters.length - index}',
                         typography: CoffeeTypography.title,
                       ),
                       CoffeeText(
-                        text: 'Traduzido por ${widget.chapTranslator}',
+                        text:
+                            'Traduzido por ${manga.chapters[index].translator}',
                         color: ThemeService.of.selectText,
                       ),
                       CoffeeText(
-                        text: 'Adicionado em ${widget.chapAddedDate}',
+                        text:
+                            'Adicinado em ${manga.chapters[index].translatedAt}',
                         color: ThemeService.of.selectText,
                       ),
                     ],
@@ -74,7 +73,7 @@ class _ChaptersState extends State<Chapters> {
                         iconSize: 40,
                       ),
                       const SizedBox(width: 10),
-                      widget.userChaptersReaded.contains(index)
+                      widget.controller.userChaptersReaded.contains(index)
                           ? const Icon(Icons.check_rounded, size: 40)
                           : const SizedBox.shrink(),
                     ],
