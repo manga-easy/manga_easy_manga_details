@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:manga_easy_manga_details/src/features/presenter/store/details_rating_store.dart';
+import 'package:manga_easy_manga_details/src/features/presenter/controllers/manga_details_controller.dart';
 import 'package:manga_easy_manga_details/src/features/presenter/ui/molecules/text_button_bottom_border.dart';
 import 'package:manga_easy_themes/manga_easy_themes.dart';
 import 'rating_page.dart';
 import 'details_page.dart';
 
 class BottomSidePage extends StatefulWidget {
-  const BottomSidePage({super.key, required this.detailsRatingStore});
-  final DetailsRatingStore detailsRatingStore;
+  const BottomSidePage({super.key, required this.controller});
+  final MangaDetailsController controller;
   @override
   State<BottomSidePage> createState() => _BottomSidePageState();
 }
@@ -15,7 +15,7 @@ class BottomSidePage extends StatefulWidget {
 class _BottomSidePageState extends State<BottomSidePage> {
   @override
   void initState() {
-    widget.detailsRatingStore.pageController.addListener(() {
+    widget.controller.pageController.addListener(() {
       setState(() {});
     });
 
@@ -25,7 +25,7 @@ class _BottomSidePageState extends State<BottomSidePage> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 25),
+      padding: const EdgeInsets.only(left: 25, right: 25, top: 70),
       color: ThemeService.of.backgroundColor,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -46,26 +46,24 @@ class _BottomSidePageState extends State<BottomSidePage> {
                 children: [
                   TextButtonBottomBorder(
                     text: 'Detalhes',
-                    onTap: () =>
-                        widget.detailsRatingStore.pageController.animateToPage(
+                    onTap: () => widget.controller.pageController.animateToPage(
                       0,
-                      duration: widget.detailsRatingStore.duration,
-                      curve: widget.detailsRatingStore.curves,
+                      duration: widget.controller.duration,
+                      curve: widget.controller.curves,
                     ),
-                    color: widget.detailsRatingStore.page == 0
+                    color: widget.controller.page == 0
                         ? ThemeService.of.backgroundText
                         : ThemeService.of.primaryColor,
                   ),
                   const SizedBox(width: 10),
                   TextButtonBottomBorder(
                     text: 'Avaliações',
-                    onTap: () =>
-                        widget.detailsRatingStore.pageController.animateToPage(
+                    onTap: () => widget.controller.pageController.animateToPage(
                       1,
-                      duration: widget.detailsRatingStore.duration,
-                      curve: widget.detailsRatingStore.curves,
+                      duration: widget.controller.duration,
+                      curve: widget.controller.curves,
                     ),
-                    color: widget.detailsRatingStore.page == 1
+                    color: widget.controller.page == 1
                         ? ThemeService.of.backgroundText
                         : ThemeService.of.primaryColor,
                   ),
@@ -77,27 +75,14 @@ class _BottomSidePageState extends State<BottomSidePage> {
           SizedBox(
             height: 1030,
             child: PageView(
-              controller: widget.detailsRatingStore.pageController,
+              controller: widget.controller.pageController,
               physics: const NeverScrollableScrollPhysics(),
               children: [
                 DetailsPage(
-                  sinopse: widget.detailsRatingStore.mangaSinopse,
-                  mangaHost: widget.detailsRatingStore.mangaHost,
-                  qtdChapters: widget.detailsRatingStore.mangaQtdChapters,
-                  mangaGenres: widget.detailsRatingStore.mangaGenres,
-                  chapTranslator: widget.detailsRatingStore.chapTranslator,
-                  chapAddedDate: widget.detailsRatingStore.chapAddedDate,
-                  userChaptersReaded:
-                      widget.detailsRatingStore.userChaptersReaded,
-                  readUnreadChapter:
-                      widget.detailsRatingStore.readUnreadChapter,
+                  controller: widget.controller,
                 ),
                 RatingPage(
-                  rating: widget.detailsRatingStore.mangaRating,
-                  commentQtd: widget.detailsRatingStore.mangaCommentQtd,
-                  reviewQtd: widget.detailsRatingStore.mangaReviewQtd,
-                  userComment: widget.detailsRatingStore.commentedBy,
-                  userRating: widget.detailsRatingStore.userRating,
+                  controller: widget.controller,
                 ),
               ],
             ),

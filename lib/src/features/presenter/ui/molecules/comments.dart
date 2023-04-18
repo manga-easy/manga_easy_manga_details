@@ -1,27 +1,33 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:coffee_cup/coffe_cup.dart';
 import 'package:flutter/material.dart';
-import 'package:manga_easy_manga_details/src/features/presenter/store/comments_store.dart';
-import 'package:manga_easy_manga_details/src/features/presenter/ui/molecules/rating_stars.dart';
+import 'package:manga_easy_manga_details/src/features/presenter/controllers/manga_details_controller.dart';
 import 'package:manga_easy_themes/manga_easy_themes.dart';
 
+import 'package:manga_easy_manga_details/src/features/presenter/ui/molecules/rating_stars.dart';
+
 class Comments extends StatefulWidget {
-  const Comments({super.key});
+  final MangaDetailsController controller;
+  const Comments({
+    Key? key,
+    required this.controller,
+  }) : super(key: key);
 
   @override
   State<Comments> createState() => _CommentsState();
 }
 
 class _CommentsState extends State<Comments> {
-  CommentsStore commentsStore = CommentsStore();
   @override
   Widget build(BuildContext context) {
+    var comments = widget.controller.manga.comments;
     double deviceWidth = MediaQuery.of(context).size.width;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         CoffeeText(
-          text: 'Comentários (${commentsStore.comments.comments.length})',
+          text: 'Comentários (${comments.length})',
           typography: CoffeeTypography.title,
         ),
         const SizedBox(height: 5),
@@ -35,7 +41,7 @@ class _CommentsState extends State<Comments> {
           height: 445, // valor tirado completamente do c#
           width: deviceWidth,
           child: ListView.builder(
-            itemCount: commentsStore.comments.comments.length,
+            itemCount: comments.length,
             itemBuilder: (context, index) {
               return Container(
                 width: double.infinity,
@@ -52,8 +58,7 @@ class _CommentsState extends State<Comments> {
                           Row(
                             children: [
                               CircleAvatar(
-                                backgroundImage: NetworkImage(commentsStore
-                                    .comments.comments[index].avatar),
+                                backgroundImage: NetworkImage(comments[index].avatar),
                                 minRadius: 42,
                               ),
                               const SizedBox(width: 15),
@@ -62,13 +67,11 @@ class _CommentsState extends State<Comments> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   CoffeeText(
-                                    text: commentsStore
-                                        .comments.comments[index].username,
+                                    text: comments[index].author,
                                     typography: CoffeeTypography.title,
                                   ),
                                   RatingStars(
-                                    rating: commentsStore
-                                        .comments.comments[index].rating,
+                                    rating: comments[index].rating,
                                     iconSize: 17.0,
                                   ),
                                 ],
@@ -77,13 +80,13 @@ class _CommentsState extends State<Comments> {
                           ),
                           CoffeeText(
                               text:
-                                  commentsStore.comments.comments[index].date),
+                               comments[index].commentedAt),
                         ],
                       ),
                     ),
                     const SizedBox(height: 15),
                     CoffeeText(
-                      text: commentsStore.comments.comments[index].message,
+                      text: comments[index].comment,
                     ),
                     const SizedBox(height: 15),
                     Row(
@@ -95,7 +98,7 @@ class _CommentsState extends State<Comments> {
                         const SizedBox(width: 10),
                         CoffeeText(
                             text:
-                                "${commentsStore.comments.comments[index].likes}"),
+                                "${comments[index].likes}"),
                       ],
                     ),
                   ],
