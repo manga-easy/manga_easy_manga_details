@@ -1,7 +1,7 @@
 import 'package:manga_easy_manga_details/src/features/domain/entities/chapter_entity.dart';
 
 extension ChapterDto on ChapterEntity {
- Map toJson() {
+  Map toJson() {
     return {
       'translator': translator,
       'translatedAt': translatedAt,
