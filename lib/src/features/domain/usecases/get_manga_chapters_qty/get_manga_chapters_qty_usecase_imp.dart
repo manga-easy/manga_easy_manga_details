@@ -7,7 +7,7 @@ class GetMangaChaptersQtyUseCaseImp implements GetMangaChaptersQtyUseCase {
   GetMangaChaptersQtyUseCaseImp(this._getMangaChapertsQtyRepository);
   
   @override
-  Future<MangaDetailsEntity> call(String name) async {
-    return await _getMangaChapertsQtyRepository(name);
+  Future<MangaDetailsEntity> call(String mangaName) async {
+    return await _getMangaChapertsQtyRepository(mangaName);
   }
 }
