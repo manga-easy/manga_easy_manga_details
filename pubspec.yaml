@@ -22,8 +22,11 @@ dependencies:
     git:
       url: https://github.com/manga-easy/manga_easy_coffee_cup.git
       ref: v1.0.0
-      
-  flutter_rating_bar: ^4.0.1
+  manga_easy_routes:
+    git:
+      url: https://github.com/manga-easy/manga_easy_routes.git
+      ref: v0.0.3
+
   get_it: ^7.2.0
   
 dev_dependencies:
