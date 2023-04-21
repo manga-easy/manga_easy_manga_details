@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:manga_easy_manga_details/src/features/domain/entities/manga_details_entity.dart';
 
-import '../../domain/usecases/get_manga_chapters_qty/get_manga_chapters_qty_usecase.dart';
+import '../../domain/usecases/get_manga_details/get_manga_details_usecase.dart';
 
 class MangaDetailsController extends ChangeNotifier {
-  final GetMangaChaptersQtyUseCase _getMangaChaptersQtyUseCase;
-  MangaDetailsController(this._getMangaChaptersQtyUseCase);
+  final GetMangaDetailsUseCase _getMangaDetailsUseCase;
+  MangaDetailsController(this._getMangaDetailsUseCase);
 
   late MangaDetailsEntity manga;
 
-  getMangaChaptersQty(String name) async {
-    manga = await _getMangaChaptersQtyUseCase(name);
+  getMangaDetails(String name) async {
+    manga = await _getMangaDetailsUseCase(name);
   }
 
   final Duration duration =

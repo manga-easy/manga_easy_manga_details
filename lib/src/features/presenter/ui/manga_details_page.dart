@@ -14,16 +14,16 @@ class MangaDetailsPage extends StatefulWidget {
 }
 
 class _MangaDetailsPageState extends State<MangaDetailsPage> {
+  final MangaDetailsController _controller = GetIt.I();
   @override
   void initState() {
-    _controller.getMangaChaptersQty('One Piece');
+    _controller.getMangaDetails('One Piece');
     _controller.addListener(() {
       setState(() {});
     });
     super.initState();
   }
 
-  final MangaDetailsController _controller = GetIt.I();
   @override
   Widget build(BuildContext context) {
     double deviceWidth = MediaQuery.of(context).size.width;
@@ -54,7 +54,7 @@ class _MangaDetailsPageState extends State<MangaDetailsPage> {
                   height: 80,
                   child: MangaRatingChaptersStatus(
                     mangaRating: _controller.manga.rating,
-                    mangaQtdChapters: 3,
+                    mangaQtdChapters: _controller.manga.chapters.length,
                     mangaStatus: _controller.manga.status,
                   ),
                 ),
