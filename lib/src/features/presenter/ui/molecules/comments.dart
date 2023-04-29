@@ -20,14 +20,14 @@ class Comments extends StatefulWidget {
 class _CommentsState extends State<Comments> {
   @override
   Widget build(BuildContext context) {
-    var comments = widget.controller.manga.comments;
+    // var comments = widget.controller.manga.comments;
     double deviceWidth = MediaQuery.of(context).size.width;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        CoffeeText(
-          text: 'Comentários (${comments.length})',
+        const CoffeeText(
+          text: 'Comentários (1)',
           typography: CoffeeTypography.title,
         ),
         const SizedBox(height: 5),
@@ -41,7 +41,7 @@ class _CommentsState extends State<Comments> {
           height: 445, // valor tirado completamente do c#
           width: deviceWidth,
           child: ListView.builder(
-            itemCount: comments.length,
+            itemCount: 1,
             itemBuilder: (context, index) {
               return Container(
                 width: double.infinity,
@@ -57,36 +57,36 @@ class _CommentsState extends State<Comments> {
                         children: [
                           Row(
                             children: [
-                              CircleAvatar(
-                                backgroundImage: NetworkImage(comments[index].avatar),
+                              const CircleAvatar(
+                                backgroundImage: NetworkImage(
+                                    'https://cdn-icons-png.flaticon.com/512/5556/5556512.png'),
                                 minRadius: 42,
                               ),
                               const SizedBox(width: 15),
                               Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
+                                children: const [
                                   CoffeeText(
-                                    text: comments[index].author,
+                                    text: 'Roberto Junior',
                                     typography: CoffeeTypography.title,
                                   ),
                                   RatingStars(
-                                    rating: comments[index].rating,
+                                    rating: 2.5,
                                     iconSize: 17.0,
                                   ),
                                 ],
                               ),
                             ],
                           ),
-                          CoffeeText(
-                              text:
-                               comments[index].commentedAt),
+                          const CoffeeText(text: "11/04/2023"),
                         ],
                       ),
                     ),
                     const SizedBox(height: 15),
-                    CoffeeText(
-                      text: comments[index].comment,
+                    const CoffeeText(
+                      text:
+                          "Mussum Ipsum, cacilds vidis litro abertis. Detraxit consequat et quo num tendi nada.Interessantiss quisso pudia ce receita de bolis, mais bolis eu num gostis.Em pé sem cair, deitado sem dormir, sentado sem cochilar e fazendo pose.Viva Forevis aptent taciti sociosqu ad litora torquent.",
                     ),
                     const SizedBox(height: 15),
                     Row(
@@ -96,9 +96,7 @@ class _CommentsState extends State<Comments> {
                           child: const Icon(Icons.favorite),
                         ),
                         const SizedBox(width: 10),
-                        CoffeeText(
-                            text:
-                                "${comments[index].likes}"),
+                        const CoffeeText(text: "2"),
                       ],
                     ),
                   ],

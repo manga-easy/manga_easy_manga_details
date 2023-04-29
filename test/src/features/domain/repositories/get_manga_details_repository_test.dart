@@ -1,47 +1,65 @@
+import 'package:client_driver/client_driver.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:manga_easy_manga_details/src/features/data/datasources/get_manga_details_datasource.dart';
-import 'package:manga_easy_manga_details/src/features/data/datasources/local/get_manga_details_datasource_imp.dart';
+import 'package:manga_easy_manga_details/src/features/data/datasources/remote/manga_easy_datasource.dart';
+import 'package:manga_easy_manga_details/src/features/data/datasources/remote/manga_easy_datasource_imp.dart';
 import 'package:manga_easy_manga_details/src/features/data/repositories/get_manga_details_repository_imp.dart';
+import 'package:manga_easy_manga_details/src/features/domain/mappers/mapper_manga.dart';
 import 'package:manga_easy_manga_details/src/features/domain/repositories/get_manga_details_repository.dart';
 
 void main() {
-  GetMangaDetailsDataSource dataSource = GetMangaDetailsDataSourceImp();
+  MangaEasyDataSource dataSource = MangaEasyDataSourceImp(DioDriver());
+  MapperManga mapperManga = MapperManga();
   GetMangaDetailsRepository repository =
-      GetMangaDetailsRepositoryImp(dataSource);
+      GetMangaDetailsRepositoryImp(dataSource, mapperManga);
 
+  test('Devolve a quantidade de capítulos do manga One Punch Man', () async {
+    var result = await repository.getMangaDetails('onepunchman');
+
+    expect(result.lastcap, '210');
+  });
   test('Devolve a quantidade de capítulos do manga One Piece', () async {
-    var result = await repository('One Piece');
+    var result = await repository.getMangaDetails('onepiece');
 
-    expect(
-      result.chapters.length,
-      4,
-    );
+    expect(result.lastcap, '1071');
   });
 
-  test('Devolve a avaliação do manga One Piece', () async {
-    var result = await repository('One Piece');
+  test('Devolve o autor do manga One Piece', () async {
+    var result = await repository.getMangaDetails('onepiece');
 
-    expect(
-      result.rating,
-      4.8,
-    );
+    expect(result.author, 'Oda Eiichiro');
   });
 
-  test('Devolve o status do manga One Piece', () async {
-    var result = await repository('One Piece');
+  test('Devolve O QUE? quando n tem nada?', () async {
+    var result = await repository.getMangaDetails('');
 
-    expect(
-      result.status,
-      'Ativo',
-    );
+    expect(result.name, '');
   });
 
-  test('Devolve o host do manga One Piece', () async {
-    var result = await repository('One Piece');
+//   test('Devolve a avaliação do manga One Piece', () async {
+//     var result = await repository.getMangaDetails('One Piece');
 
-    expect(
-      result.host,
-      'One Piece Ex',
-    );
-  });
+//     expect(
+//       result.rating,
+//       4.8,
+//     );
+//   });
+
+//   test('Devolve o status do manga One Piece', () async {
+//     var result = await repository.getMangaDetails('One Piece');
+
+//     expect(
+//       result.status,
+//       'Ativo',
+//     );
+//   });
+
+//   test('Devolve o host do manga One Piece', () async {
+//     var result = await repository.getMangaDetails('One Piece');
+
+//     expect(
+//       result.host,
+//       'One Piece Ex',
+//     );
+//   });
+// }
 }

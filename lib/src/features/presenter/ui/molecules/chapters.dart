@@ -21,9 +21,10 @@ class _ChaptersState extends State<Chapters> {
   @override
   Widget build(BuildContext context) {
     var manga = widget.controller.manga;
+    var mangaChapters = int.parse(manga.lastcap);
     return Expanded(
       child: ListView.builder(
-        itemCount: manga.chapters.length,
+        itemCount: mangaChapters,
         itemBuilder: (context, index) {
           return GestureDetector(
             onTap: () {
@@ -50,17 +51,16 @@ class _ChaptersState extends State<Chapters> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       CoffeeText(
-                        text: 'Capitulo ${manga.chapters.length - index}',
+                        text: 'Capitulo ${mangaChapters - index}',
                         typography: CoffeeTypography.title,
                       ),
                       CoffeeText(
-                        text:
-                            'Traduzido por ${manga.chapters[index].translator}',
+                        text: 'Traduzido por Tradutor',
                         color: ThemeService.of.selectText,
                       ),
                       CoffeeText(
                         text:
-                            'Adicinado em ${manga.chapters[index].translatedAt}',
+                            'Adicionado em ${DateTime.now().day}/0${DateTime.now().month}/2023',
                         color: ThemeService.of.selectText,
                       ),
                     ],

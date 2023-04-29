@@ -26,6 +26,10 @@ dependencies:
     git:
       url: https://github.com/manga-easy/manga_easy_routes.git
       ref: v0.0.3
+  client_driver:
+    git:
+      url: https://github.com/manga-easy/manga_easy_client_driver.git
+      ref: v1.0.0
 
   get_it: ^7.2.0
   

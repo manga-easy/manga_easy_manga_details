@@ -1,16 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:manga_easy_manga_details/src/features/domain/entities/manga_details_entity.dart';
+import 'package:manga_easy_manga_details/src/features/presenter/states/loading_state.dart';
+import 'package:manga_easy_sdk/manga_easy_sdk.dart';
 
 import '../../domain/usecases/get_manga_details/get_manga_details_usecase.dart';
 
 class MangaDetailsController extends ChangeNotifier {
   final GetMangaDetailsUseCase _getMangaDetailsUseCase;
+  late InfoComicModel manga;
+  LoadingState state = PendingLoadingState();
   MangaDetailsController(this._getMangaDetailsUseCase);
 
-  late MangaDetailsEntity manga;
-
   getMangaDetails(String name) async {
-    manga = await _getMangaDetailsUseCase(name);
+    state = PendingLoadingState();
+    try {
+      manga = await _getMangaDetailsUseCase(name);
+      state = SuccessLoadingState();
+    } catch (e) {
+      state = FailedLoadingState(message: e.toString());
+    }
+    notifyListeners();
   }
 
   final Duration duration =

@@ -26,7 +26,7 @@ class _DetailsPageState extends State<DetailsPage> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        GenresChips(genres: manga.genres),
+        GenresChips(genres: manga.genres.split('<>').toList()),
         const SizedBox(height: 20),
         const CoffeeText(text: 'Sinopse', typography: CoffeeTypography.title),
         CoffeeText(
@@ -36,12 +36,12 @@ class _DetailsPageState extends State<DetailsPage> {
         const SizedBox(height: 20),
         const CoffeeText(text: 'Host', typography: CoffeeTypography.title),
         CoffeeText(
-          text: manga.host,
+          text: manga.scans,
           typography: CoffeeTypography.body,
         ),
         const SizedBox(height: 20),
         CoffeeText(
-          text: 'Capitulos (${manga.chapters.length})',
+          text: 'Capitulos (${manga.lastcap})',
           typography: CoffeeTypography.title,
         ),
         const SizedBox(height: 20),

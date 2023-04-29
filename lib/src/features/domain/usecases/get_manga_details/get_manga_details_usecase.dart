@@ -1,5 +1,6 @@
-import 'package:manga_easy_manga_details/src/features/domain/entities/manga_details_entity.dart';
+
+import 'package:manga_easy_sdk/manga_easy_sdk.dart';
 
 abstract class GetMangaDetailsUseCase {
-  Future<MangaDetailsEntity> call(String mangaName);
+  Future<InfoComicModel> call(String mangaName);
 }
